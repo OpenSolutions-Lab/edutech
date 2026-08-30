@@ -7,6 +7,9 @@ Uma plataforma inteligente desenvolvida para otimizar a gestão, planejamento e 
 ## 🚀 Acesso à Aplicação & Materiais da Solução
 
 - 🌐 **Aplicação em Produção (Vercel):** [https://edutech-steel-six.vercel.app/](https://edutech-steel-six.vercel.app/)
+  - 🔑 **Credenciais de Acesso para Teste:**
+    - **Usuário:** `juniorgoulart.rj@gmail.com`
+    - **Senha:** `123456`
 - 📊 **Apresentação Interativa da Solução:** [EduTech-Slides-Apresentacao-v2.html](./EduTech-Slides-Apresentacao-v2.html)
 - 🎥 **Vídeo Explicativo da Solução:** [Gestão eficiente de vagas na educação.mp4](./Gestão%20eficiente%20de%20vagas%20na%20educação.mp4)
 
