@@ -38,20 +38,20 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Painel Executivo", href: "/dashboard", icon: LayoutDashboard },
-  // 🎯 Inscrição de Creche (Match Perfeito)
-  { label: "Gestão de Fila (Fila Viva)", href: "/creche/gestao-fila", icon: UserCheck, group: "🎯 Match Perfeito & Creches" },
-  { label: "Mapa Oferta × Demanda", href: "/creche/mapa", icon: MapPin, group: "🎯 Match Perfeito & Creches" },
-  { label: "Motor CPF & Duplicidade", href: "/creche/duplicidade", icon: Layers, group: "🎯 Match Perfeito & Creches" },
-  { label: "Demanda Futura (IBGE)", href: "/creche/demanda-futura", icon: Baby, group: "🎯 Match Perfeito & Creches" },
-  { label: "Simulador de Convocação", href: "/creche/convocacao", icon: Send, group: "🎯 Match Perfeito & Creches" },
-  // GenAI & Copilot Agêntico
-  { label: "Copilot Agêntico Creche", href: "/copilot", icon: Brain, group: "✨ GenAI & Copilot" },
-  { label: "Simulador What-If", href: "/simulador", icon: Network, group: "✨ GenAI & Copilot" },
-  // Intersetorial
-  { label: "Inteligência Intersetorial", href: "/intersetorial", icon: GraduationCap, group: "🌐 SME + SMDEIS DATA.RIO" },
-  // BI & Relatórios
-  { label: "Relatórios PDF Executivos", href: "/relatorios", icon: BarChart3, group: "📈 Business Intelligence" },
-  { label: "Fila de Espera", href: "/bi/fila", icon: Clock, group: "📈 Business Intelligence" },
+  // Indicadores & Relatórios
+  { label: "Relatórios Executivos", href: "/relatorios", icon: BarChart3, group: "📈 Indicadores & Relatórios" },
+  { label: "Análise da Fila", href: "/bi/fila", icon: Clock, group: "📈 Indicadores & Relatórios" },
+  // Gestão de Creches
+  { label: "Gestão da Fila", href: "/creche/gestao-fila", icon: UserCheck, group: "🏫 Gestão de Creches" },
+  { label: "Mapa Oferta e Demanda", href: "/creche/mapa", icon: MapPin, group: "🏫 Gestão de Creches" },
+  { label: "Verificação de Duplicidades", href: "/creche/duplicidade", icon: Layers, group: "🏫 Gestão de Creches" },
+  { label: "Projeção de Demanda", href: "/creche/demanda-futura", icon: Baby, group: "🏫 Gestão de Creches" },
+  { label: "Simulação de Convocação", href: "/creche/convocacao", icon: Send, group: "🏫 Gestão de Creches" },
+  // Assistente & Simulações
+  { label: "Assistente de Dados", href: "/copilot", icon: Brain, group: "✨ Assistente & Simulações" },
+  { label: "Simulador de Cenários", href: "/simulador", icon: Network, group: "✨ Assistente & Simulações" },
+  // Dados Intersetoriais
+  { label: "Painel Intersetorial", href: "/intersetorial", icon: GraduationCap, group: "🌐 Dados Intersetoriais" },
 ];
 
 export function Sidebar() {

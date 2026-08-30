@@ -36,18 +36,24 @@ export interface EscolaReformaGeo {
   score_prioridade: number; // 0 a 100
 }
 
-// MOCKS DE FALLBACK COM EXCLUSIVIDADE PARA CRECHES E EDIS
-const MOCK_ESCOLAS_GEO: EscolaGeo[] = [
-  { id: '0716609', nome: 'CM RIO NOVO - RIO DAS FLORES', tipo: 'Creche Municipal', cre_id: 7, lat: -22.9542, lng: -43.3421, total_matriculas: 120, taxa_evasao: 1.2, score_risco: 0.92, nivel_risco: 'critico', ar_condicionado: true },
-  { id: '0716812', nome: 'EDI ESCRITORA CLARICE LISPECTOR', tipo: 'EDI', cre_id: 7, lat: -22.9610, lng: -43.3512, total_matriculas: 150, taxa_evasao: 0.9, score_risco: 0.89, nivel_risco: 'critico', ar_condicionado: true },
-  { id: '0716601', nome: 'CM OTÁVIO HENRIQUE DE OLIVEIRA', tipo: 'Creche Municipal', cre_id: 7, lat: -22.9488, lng: -43.3611, total_matriculas: 140, taxa_evasao: 1.5, score_risco: 0.86, nivel_risco: 'critico', ar_condicionado: true },
-  { id: '0411602', nome: 'EDI PROFE. KATIA LIMA', tipo: 'EDI', cre_id: 4, lat: -22.8580, lng: -43.2450, total_matriculas: 180, taxa_evasao: 2.1, score_risco: 0.89, nivel_risco: 'critico', ar_condicionado: false },
-  { id: '1019605', nome: 'CM GUARATIBA PRIMEIRA INFÂNCIA', tipo: 'Creche Municipal', cre_id: 10, lat: -22.9890, lng: -43.5890, total_matriculas: 160, taxa_evasao: 1.8, score_risco: 0.87, nivel_risco: 'alto', ar_condicionado: true },
-  { id: '0102601', nome: 'EDI SANTA TERESA INFANTIL', tipo: 'EDI', cre_id: 1, lat: -22.9210, lng: -43.1890, total_matriculas: 90, taxa_evasao: 0.8, score_risco: 0.32, nivel_risco: 'baixo', ar_condicionado: true },
-  { id: '0204603', nome: 'CM BOTAFOGO INFANTIL', tipo: 'Creche Municipal', cre_id: 2, lat: -22.9510, lng: -43.1820, total_matriculas: 100, taxa_evasao: 0.5, score_risco: 0.12, nivel_risco: 'baixo', ar_condicionado: true },
-  { id: '0716805', nome: 'EDI FREGUESIA INFANTIL', tipo: 'EDI', cre_id: 7, lat: -22.9410, lng: -43.3400, total_matriculas: 130, taxa_evasao: 1.1, score_risco: 0.45, nivel_risco: 'moderado', ar_condicionado: true },
-  { id: '0515602', nome: 'EDI MADUREIRA INFANTIL', tipo: 'EDI', cre_id: 5, lat: -22.8710, lng: -43.3360, total_matriculas: 140, taxa_evasao: 1.9, score_risco: 0.54, nivel_risco: 'alto', ar_condicionado: true }
-];
+import realDataRio from '@/lib/constants/real-data-rio.json';
+
+// MOCKS DE FALLBACK COM TODAS AS 533 CRECHES E EDIS OFICIAIS DO DATA.RIO
+const MOCK_ESCOLAS_GEO: EscolaGeo[] = (realDataRio.escolas || [])
+  .filter((e: any) => e.tipo === 'Creche Municipal' || e.tipo === 'EDI' || e.tipo === 'Creche')
+  .map((e: any) => ({
+    id: String(e.id || e.codigo_escola || Math.random()),
+    nome: e.nome,
+    tipo: e.tipo,
+    cre_id: Number(e.cre || 0),
+    lat: e.coords ? e.coords[1] : -22.9,
+    lng: e.coords ? e.coords[0] : -43.2,
+    total_matriculas: 120,
+    taxa_evasao: 1.2,
+    score_risco: 0.2,
+    nivel_risco: 'baixo' as const,
+    ar_condicionado: true
+  }));
 
 const MOCK_VAZIOS_GEO = (tipo: string): VazioEducacionalGeo[] => [
   {
@@ -121,7 +127,8 @@ export async function getEscolasGeo(): Promise<EscolaGeo[]> {
           nivel_risco
         )
       `)
-      .eq('status', 'ativa');
+      .eq('status', 'ativa')
+      .in('tipo', ['Creche', 'Creche Municipal', 'EDI']);
 
     if (error || !data || data.length === 0) {
       return MOCK_ESCOLAS_GEO;

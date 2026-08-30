@@ -5,8 +5,8 @@ import { School } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Mapa das Escolas | EduRio-Insights',
-  description: 'Mapa público das escolas municipais do Rio de Janeiro.'
+  title: 'Mapa das Creches e EDIs | EduRio-Insights',
+  description: 'Mapa público georreferenciado das creches municipais e EDIs do Rio de Janeiro.'
 };
 
 export default async function MapaPublicoPage() {
@@ -45,9 +45,9 @@ export default async function MapaPublicoPage() {
       {/* Map */}
       <main className="mx-auto max-w-6xl px-6 py-10 space-y-8 relative z-10">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Mapa das Escolas</h1>
+          <h1 className="text-3xl font-bold text-foreground">Mapa das Creches e EDIs</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Visualize espacialmente as unidades escolares geridas pela Secretaria Municipal de Educação do Rio de Janeiro.
+            Visualize espacialmente a localização das unidades de Primeira Infância (Creches Municipais e EDIs) da Prefeitura do Rio de Janeiro.
           </p>
         </div>
 
