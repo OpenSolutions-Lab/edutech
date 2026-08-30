@@ -12,27 +12,27 @@ O **EduTech** (também conhecido como **EduRio-Insights**) é um sistema de supo
 
 ```mermaid
 graph TD
-    subgraph ClientLayer ["Camada de Apresentação (Frontend & UI)"]
-        UI_Dash ["Dashboard BI Executivo (Recharts)"]
-        UI_Map ["Geoprocessamento (Mapbox GL JS + Deck.gl)"]
-        UI_Wizard ["Wizard de Inscrição Pública (5 Etapas + @react-pdf)"]
-        UI_Copilot ["Copilot com IA (LLM Anthropic SDK)"]
-        UI_EWS ["Painel de Alerta Precoce (EWS)"]
+    subgraph ClientLayer["Camada de Apresentação (Frontend & UI)"]
+        UI_Dash["Dashboard BI Executivo (Recharts)"]
+        UI_Map["Geoprocessamento (Mapbox GL JS + Deck.gl)"]
+        UI_Wizard["Wizard de Inscrição Pública (5 Etapas + @react-pdf)"]
+        UI_Copilot["Copilot com IA (LLM Anthropic SDK)"]
+        UI_EWS["Painel de Alerta Precoce (EWS)"]
     end
 
-    subgraph ServiceLayer ["Camada de Aplicação & Regras de Negócio (Next.js App Router)"]
-        SA_Fila ["Motor Fila Viva (queue-engine.ts)"]
-        SA_Match ["Matching Engine & Score Socioeconômico"]
-        SA_Duplicidade ["Filtro de Desduplicação por CPF"]
-        SA_RAG ["RAG Pedagógico (pedagogico-rag-model.ts)"]
-        SA_Sim ["Simulador de Políticas Públicas"]
+    subgraph ServiceLayer["Camada de Aplicação & Regras de Negócio (Next.js App Router)"]
+        SA_Fila["Motor Fila Viva (queue-engine.ts)"]
+        SA_Match["Matching Engine & Score Socioeconômico"]
+        SA_Duplicidade["Filtro de Desduplicação por CPF"]
+        SA_RAG["RAG Pedagógico (pedagogico-rag-model.ts)"]
+        SA_Sim["Simulador de Políticas Públicas"]
     end
 
-    subgraph DataLayer ["Camada de Dados & Persistência (Supabase / PostgreSQL + PostGIS)"]
-        DB_Core ["Core SME: escolas, cres, bairros, matriculas_historico"]
-        DB_Creche ["Módulo Creches: creche_unidades, creche_inscricoes"]
-        DB_SMDEIS ["Mesh Intersetorial: smdeis_bairros_economia, hubs, observatorio"]
-        DB_Views ["Views Materializadas & Funções PostGIS (RPC)"]
+    subgraph DataLayer["Camada de Dados & Persistência (Supabase / PostgreSQL + PostGIS)"]
+        DB_Core["Core SME: escolas, cres, bairros, matriculas_historico"]
+        DB_Creche["Módulo Creches: creche_unidades, creche_inscricoes"]
+        DB_SMDEIS["Mesh Intersetorial: smdeis_bairros_economia, hubs, observatorio"]
+        DB_Views["Views Materializadas & Funções PostGIS (RPC)"]
     end
 
     UI_Dash --> SA_Fila
