@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "regions": ["gru1"],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "s-maxage=60, stale-while-revalidate=300" }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/predict/evasion",
+      "schedule": "0 3 * * 1"
+    },
+    {
+      "path": "/api/predict/rh",
+      "schedule": "0 4 1 * *"
+    }
+  ]
+}
