@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 EduTech — Gestão Eficiente de Vagas na Educação
 
-## Getting Started
+Uma plataforma inteligente desenvolvida para otimizar a gestão, planejamento e alocação de vagas na Educação Infantil (Creches e Espaços de Desenvolvimento Infantil - EDIs) da Rede Municipal de Ensino do Rio de Janeiro (SME-RJ).
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Acesso à Aplicação & Materiais da Solução
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🌐 **Aplicação em Produção (Vercel):** [https://edutech-steel-six.vercel.app/](https://edutech-steel-six.vercel.app/)
+- 📊 **Apresentação Interativa da Solução:** [EduTech-Slides-Apresentacao-v2.html](./EduTech-Slides-Apresentacao-v2.html)
+- 🎥 **Vídeo Explicativo da Solução:** [Gestão eficiente de vagas na educação.mp4](./Gestão%20eficiente%20de%20vagas%20na%20educação.mp4)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📌 Visão Geral do Projeto
 
-## Learn More
+O **EduTech** foi desenvolvido para transformar o cenário de distribuição e atendimento de vagas em creches públicas, enfrentando desafios como filas de espera regionais, escassez de infraestrutura em áreas vulneráveis e assimetria entre oferta e demanda.
 
-To learn more about Next.js, take a look at the following resources:
+### Principais Funcionalidades:
+- 🗺️ **Mapa Interativo & Georreferenciamento:** Visualização geoespacial (Mapbox + Deck.gl) com análise de capacidade, cobertura regional por CRE e isolinhas de acessibilidade.
+- 📊 **Painel Executivo BI:** Métricas em tempo real sobre taxa de atendimento, déficit de vagas e distribuição de matrículas por faixa etária (Berçário I/II, Maternal I/II).
+- 📋 **Gestão de Fila Unificada:** Acompanhamento dinâmico das filas de espera com ordenação por critérios de prioridade e vulnerabilidade socioeconômica.
+- 🤝 **Inteligência Intersetorial:** Integração de dados de programas sociais para priorização transparente de famílias de baixa renda.
+- 🤖 **Assistente com IA:** Suporte inteligente baseado em linguagem natural para consulta de dados, geração de relatórios e tomada de decisão estratégica.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tecnologias Utilizadas
 
-## Deploy on Vercel
+- **Framework Front-end:** [Next.js 16](https://nextjs.org/) (React 19, App Router, TypeScript)
+- **Estilização & UI:** Tailwind CSS, Framer Motion, Lucide Icons
+- **Mapeamento & Geoprocessamento:** Mapbox GL JS, Deck.gl, Supercluster
+- **Banco de Dados & Backend:** Supabase (PostgreSQL)
+- **Visualização de Dados:** Recharts
+- **Deploy:** Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 💻 Como Executar o Projeto Localmente
+
+### Pré-requisitos
+- Node.js 18+ instalado
+- Gerenciador de pacotes (`npm`, `yarn` ou `pnpm`)
+
+### Passo a Passo
+
+1. **Clonar o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/edutech.git
+   cd edutech
+   ```
+
+2. **Instalar as dependências:**
+   ```bash
+   npm install
+   ```
+
+3. **Configurar as Variáveis de Ambiente:**
+   Crie um arquivo `.env.local` na raiz do projeto com as credenciais do Supabase e Mapbox:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=sua_url_supabase
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anonima
+   NEXT_PUBLIC_MAPBOX_TOKEN=seu_token_mapbox
+   ```
+
+4. **Iniciar o servidor de desenvolvimento:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Acessar no navegador:**
+   Abra [http://localhost:3000](http://localhost:3000)
