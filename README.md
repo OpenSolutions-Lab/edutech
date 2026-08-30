@@ -10,6 +10,8 @@ Uma plataforma inteligente desenvolvida para otimizar a gestão, planejamento e 
   - 🔑 **Credenciais de Acesso para Teste:**
     - **Usuário:** `juniorgoulart.rj@gmail.com`
     - **Senha:** `123456`
+- 📘 **Documentação Técnica Detalhada:** [DOCUMENTACAO_TECNICA.md](./docs/DOCUMENTACAO_TECNICA.md)
+- 📖 **Guia do Usuário (Manual Operacional):** [GUIA_DO_USUARIO.md](./docs/GUIA_DO_USUARIO.md)
 - 📊 **Apresentação Interativa da Solução:** [EduTech-Slides-Apresentacao-v2.html](./EduTech-Slides-Apresentacao-v2.html)
 - 🎥 **Vídeo Explicativo da Solução:** [Gestão eficiente de vagas na educação.mp4](./Gestão%20eficiente%20de%20vagas%20na%20educação.mp4)
 
