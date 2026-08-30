@@ -17,7 +17,7 @@ Com esta plataforma, você pode:
 
 ### 1.1 Credenciais de Acesso (Modo de Teste / Homologação)
 * **Link de Acesso:** [https://edutech-steel-six.vercel.app/](https://edutech-steel-six.vercel.app/)
-* **Usuário:** `juniorgoulart.rj@gmail.com`
+* **Usuário:** `teste@exemplo.com`
 * **Senha:** `123456`
 
 ---

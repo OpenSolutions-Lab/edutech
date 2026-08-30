@@ -8,7 +8,7 @@ Uma plataforma inteligente desenvolvida para otimizar a gestão, planejamento e 
 
 - 🌐 **Aplicação em Produção (Vercel):** [https://edutech-steel-six.vercel.app/](https://edutech-steel-six.vercel.app/)
   - 🔑 **Credenciais de Acesso para Teste:**
-    - **Usuário:** `juniorgoulart.rj@gmail.com`
+    - **Usuário:** `teste@exemplo.com`
     - **Senha:** `123456`
 - 📘 **Documentação Técnica Detalhada:** [DOCUMENTACAO_TECNICA.md](./docs/DOCUMENTACAO_TECNICA.md)
 - 📖 **Guia do Usuário (Manual Operacional):** [GUIA_DO_USUARIO.md](./docs/GUIA_DO_USUARIO.md)
