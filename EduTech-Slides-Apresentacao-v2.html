@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Match Perfeito — EduTech | SME-Rio</title>
+<style>
+  :root {
+    --marinho: #0B3B60;
+    --marinho-claro: #1B6FA8;
+    --azul-claro: #C9D9E8;
+    --fundo: #F4F8FC;
+    --verde: #1B7A43;
+    --amarelo: #8A6508;
+    --texto: #10243D;
+    --muted: #5A7085;
+    --texto-secundario: #33495C;
+  }
+  * { box-sizing: border-box; }
+  html {
+    scroll-snap-type: y proximity;
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+  }
+  section {
+    min-height: 100vh;
+    padding: 8vh 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-snap-align: start;
+    position: relative;
+    border-bottom: 1px solid #dfe8f0;
+  }
+  section.hero {
+    background: linear-gradient(150deg, var(--marinho) 0%, #123a5c 55%, #0a2540 100%);
+    color: white;
+  }
+  section.dark {
+    background: var(--marinho);
+    color: white;
+  }
+  .kicker {
+    color: var(--marinho);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.95em;
+    margin-bottom: 0.8em;
+  }
+  section.hero .kicker, section.dark .kicker { color: var(--azul-claro); }
+  h1 {
+    font-size: 3.4em;
+    color: var(--marinho);
+    margin: 0 0 0.25em 0;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  section.hero h1, section.dark h1 { color: white; }
+  h2 {
+    font-size: 2.2em;
+    color: var(--marinho);
+    margin: 0 0 0.7em 0;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  section.dark h2 { color: white; }
+  p.lead { font-size: 1.35em; line-height: 1.55; color: var(--texto-secundario); max-width: 46em; }
+  section.hero p.lead, section.dark p.lead { color: var(--azul-claro); }
+  p.lead.lead-spaced { margin-top: 1.2em; }
+  .badge-logo {
+    position: absolute; top: 30px; right: 40px;
+    font-size: 0.85em; font-weight: 700; color: var(--azul-claro);
+  }
+
+  .cards { display: flex; gap: 1.5em; margin-top: 1.4em; flex-wrap: wrap; }
+  .card {
+    background: white; border-radius: 14px; padding: 1.5em 1.7em;
+    box-shadow: 0 4px 18px rgba(11,59,96,0.10);
+    flex: 1; min-width: 260px;
+    border-top: 5px solid var(--marinho);
+  }
+  .card h3 { margin: 0 0 0.4em 0; color: var(--marinho); font-size: 1.25em; }
+  .card p { margin: 0; font-size: 1em; color: var(--texto-secundario); }
+
+  .big-numbers { display: flex; gap: 2.5em; margin-top: 1em; flex-wrap: wrap; }
+  .big-number .num { font-size: 4.2em; font-weight: 900; color: var(--marinho); line-height: 1; }
+  section.dark .big-number .num { color: white; }
+  .big-number .label { font-size: 1.05em; color: var(--muted); max-width: 16em; }
+  section.dark .big-number .label { color: var(--azul-claro); }
+
+  table { border-collapse: collapse; width: 100%; margin-top: 1em; font-size: 1.05em; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(11,59,96,0.08); }
+  th, td { text-align: left; padding: 0.7em 1em; border-bottom: 1px solid #e4ecf3; color: var(--texto); }
+  th { color: white; background: var(--marinho); text-transform: uppercase; font-size: 0.78em; letter-spacing: 0.05em; }
+  tr:last-child td { border-bottom: none; }
+
+  .tag { display: inline-block; padding: 0.2em 0.8em; border-radius: 12px; font-size: 0.78em; font-weight: 700; color: white; }
+  .tag.real { background: var(--verde); }
+  .tag.sim { background: var(--amarelo); }
+  .tag.parcial { background: var(--marinho-claro); }
+
+  ul.roteiro { list-style: none; padding: 0; margin-top: 1.2em; }
+  ul.roteiro li {
+    font-size: 1.25em; padding: 0.7em 0 0.7em 1.4em; border-left: 4px solid var(--marinho-claro);
+    margin-bottom: 0.5em; background: white; border-radius: 0 8px 8px 0; padding-right: 1em;
+  }
+  .timer { color: var(--marinho); font-weight: 800; margin-right: 0.6em; }
+
+  .dots {
+    position: fixed; right: 22px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px; z-index: 20;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); cursor: pointer; transition: background .2s, transform .2s; }
+  .dot.active { background: var(--marinho); transform: scale(1.4); }
+
+  /* Jornada em 3 estágios: fizemos / podemos fazer / um dia pode ser feito */
+  .estagio-tag {
+    display: inline-flex; align-items: center; gap: 0.6em;
+    font-size: 0.95em; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+    margin-bottom: 1em; color: white;
+  }
+  .estagio-tag .passo {
+    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 0.9em; border: 2px solid currentColor;
+  }
+  section.estagio-1 { background: linear-gradient(150deg, #0B3B60 0%, #0d4f78 100%); color: white; }
+  section.estagio-2 { background: linear-gradient(150deg, #124a73 0%, #1B6FA8 100%); color: white; }
+  section.estagio-3 { background: linear-gradient(150deg, #EAF1F8 0%, #cfe3f2 100%); color: #0B3B60; }
+  section.estagio-3 .estagio-tag { color: var(--marinho); }
+  section.estagio-3 h2 { color: var(--marinho); }
+  section.estagio-1 h2, section.estagio-2 h2 { color: white; }
+  section.estagio-1 .lead, section.estagio-2 .lead { color: var(--azul-claro); }
+  section.estagio-3 .lead { color: var(--texto-secundario); }
+  .estagio-cards { display: flex; gap: 1.5em; flex-wrap: wrap; margin-top: 1.2em; }
+  .estagio-card {
+    background: rgba(255,255,255,0.16); border-radius: 14px; padding: 1.5em 1.7em;
+    flex: 1; min-width: 240px; border: 1px solid rgba(255,255,255,0.35);
+  }
+  section.estagio-3 .estagio-card { background: white; border-color: rgba(11,59,96,0.12); box-shadow: 0 4px 14px rgba(11,59,96,0.08); }
+  .estagio-card h3 { margin: 0 0 0.4em 0; font-size: 1.15em; color: white; }
+  section.estagio-3 .estagio-card h3 { color: var(--marinho); }
+  .estagio-card p { margin: 0; font-size: 0.98em; color: var(--azul-claro); }
+  section.estagio-3 .estagio-card p { color: var(--texto-secundario); }
+  .selo-testado {
+    display: inline-block; margin-top: 1em; background: rgba(255,255,255,0.22);
+    padding: 0.4em 1em; border-radius: 20px; font-size: 0.85em; font-weight: 700; color: white;
+  }
+
+  code { background: rgba(0,0,0,0.06); padding: 0.15em 0.5em; border-radius: 5px; font-size: 0.9em; }
+  section.hero code, section.dark code { background: rgba(255,255,255,0.15); color: white; }
+
+  /* Slide final v2 — horizonte intersetorial */
+  section.horizonte { background: linear-gradient(150deg, #EAF1F8 0%, #cfe3f2 100%); }
+  .rede-diagrama { display: flex; flex-direction: column; align-items: center; gap: 2.4em; margin-top: 1.6em; }
+  .rede-central {
+    background: var(--marinho); color: white; border-radius: 16px; padding: 1.1em 2.2em;
+    font-weight: 800; font-size: 1.15em; text-align: center; box-shadow: 0 8px 24px rgba(11,59,96,0.25);
+  }
+  .rede-central small { display: block; font-weight: 500; font-size: 0.68em; margin-top: 0.35em; color: var(--azul-claro); }
+  .rede-nos { display: flex; gap: 1.3em; flex-wrap: wrap; justify-content: center; }
+  .rede-no {
+    background: white; border-radius: 12px; padding: 1.2em 1.4em 1em; min-width: 190px; max-width: 220px;
+    text-align: center; box-shadow: 0 4px 14px rgba(11,59,96,0.10); border-top: 4px solid var(--marinho-claro);
+    position: relative;
+  }
+  .rede-no::before {
+    content: "↑"; position: absolute; top: -1.5em; left: 50%; transform: translateX(-50%);
+    color: var(--marinho-claro); font-size: 1.3em; font-weight: 800; line-height: 1;
+  }
+  .rede-no b { display: block; color: var(--marinho); margin-bottom: 0.3em; font-size: 1.02em; }
+  .rede-no span { font-size: 0.92em; color: var(--texto-secundario); }
+
+  footer.slide-footer {
+    position: fixed; bottom: 16px; left: 10vw; font-size: 0.78em; color: var(--texto-secundario); z-index: 5;
+    background: rgba(244,248,252,0.88); padding: 0.3em 0.8em; border-radius: 6px;
+    backdrop-filter: blur(2px);
+  }
+</style>
+</head>
+<body>
+
+<div class="dots" id="dots"></div>
+
+<!-- 1: HERO -->
+<section class="hero" id="s1">
+  <div class="badge-logo">SME-Rio · Educação</div>
+  <div class="kicker">Hackathon SME-Rio + Rio Impact Lab 2026</div>
+  <h1>Match Perfeito</h1>
+  <p class="lead">Toda semana, uma vaga fica vazia numa creche enquanto uma criança espera na fila de outra, a poucos quarteirões dali. O que decide isso é o que acontece — ou deixa de acontecer — no instante em que essa vaga abre.</p>
+</section>
+
+<!-- 2: PROBLEMA -->
+<section id="s2">
+  <div class="kicker">O problema</div>
+  <h2>Uma vaga confirmada deveria destravar outra na hora</h2>
+  <p class="lead">Uma família confirma matrícula numa unidade. Em outras duas ou três unidades, essa mesma criança ainda aparece na fila, segurando lugar — até que alguém, em algum ponto da rede, perceba e cancele manualmente.</p>
+  <div class="cards">
+    <div class="card"><h3>Cinco escolhas, nenhuma bússola</h3><p>A família indica até cinco unidades no cadastro, sem nenhuma informação de distância entre elas.</p></div>
+    <div class="card"><h3>Uma criança, várias filas</h3><p>A classificação roda opção por opção. A mesma criança pode estar classificada em cinco lugares ao mesmo tempo.</p></div>
+    <div class="card"><h3>Convocação sem memória</h3><p>A ligação acontece, mas nada registra quando, quantas vezes, nem avisa as outras unidades do resultado.</p></div>
+  </div>
+</section>
+
+<!-- 3: DADO REAL -->
+<section class="dark" id="s3">
+  <div class="kicker">O achado — dado real, 2025</div>
+  <h2>Um retrato tirado direto da base oficial</h2>
+  <div class="big-numbers">
+    <div class="big-number"><div class="num">3.935</div><div class="label">crianças com 2 ou mais opções ativas ao mesmo tempo</div></div>
+    <div class="big-number"><div class="num">12.498</div><div class="label">vagas seguradas simultaneamente — média de 3,18 por criança</div></div>
+  </div>
+  <p class="lead lead-spaced">Fonte: CIT-SME-RJ/dadoscreche (2021–2025), anonimizado. Cada número aqui vem direto da base — nenhum foi estimado.</p>
+</section>
+
+<!-- 4: A DECISÃO CENTRAL -->
+<section id="s4">
+  <div class="kicker">Por onde começamos</div>
+  <h2>Pelo balcão da creche, não pela tela do gestor</h2>
+  <p class="lead">A vaga muda de dono no segundo em que uma diretora atende o telefone e ouve "sim, aceitamos". Foi ali que decidimos construir primeiro: é o único ponto da rede de onde qualquer automação depois consegue puxar um dado real.</p>
+  <div class="cards">
+    <div class="card"><h3>Fila Unidade</h3><p>Cada unidade enxerga a própria fila, organizada por turma e numerada. Marcar contato, registrar tentativa, confirmar ou recusar — tudo em poucos cliques.</p></div>
+    <div class="card"><h3>A retroalimentação</h3><p>No segundo em que uma unidade confirma, o motor cancela as demais opções dessa criança e já chama o próximo nome, em cada unidade afetada.</p></div>
+  </div>
+</section>
+
+<!-- 5: ESTÁGIO 1 — FIZEMOS -->
+<section class="estagio-1" id="s5">
+  <div class="estagio-tag"><span class="passo">1</span> Fizemos</div>
+  <h2>Fila Unidade + Painel Gerencial</h2>
+  <p class="lead">Uma unidade confirma uma matrícula. Em segundos, a vaga que essa mesma criança segurava do outro lado do bairro aparece livre para o próximo nome da fila — sem ninguém checar planilha, sem telefonema de conferência. A SME acompanha cada confirmação ao vivo, no Painel Gerencial.</p>
+  <div class="estagio-cards">
+    <div class="estagio-card"><h3>Fila Unidade</h3><p>Login por unidade, fila numerada por turma, prazos contados em dias úteis considerando o calendário de feriados do Rio.</p></div>
+    <div class="estagio-card"><h3>Cascata automática</h3><p>Confirmar aqui cancela e promove o próximo nome nas demais unidades, no mesmo instante.</p></div>
+    <div class="estagio-card"><h3>Painel Gerencial</h3><p>KPIs da rede e ranking de unidades com mais vaga parada, atualizados pelo mesmo evento.</p></div>
+  </div>
+  <div class="selo-testado">✓ 17 testes automatizados cobrindo cascata, prazos e conflitos de confirmação</div>
+</section>
+
+<!-- 6: ESTÁGIO 2 — PODEMOS FAZER -->
+<section class="estagio-2" id="s6">
+  <div class="estagio-tag"><span class="passo">2</span> Podemos fazer</div>
+  <h2>O mesmo dado já responde outras perguntas</h2>
+  <p class="lead">Com a fila vivendo num motor central, cada confirmação e cada cascata vira um evento que outras telas já sabem ler — para a unidade, para a gestão e, agora, também para a família. Estas extensões já estão esboçadas na plataforma, prontas para ligar na mesma base assim que o núcleo estiver em produção.</p>
+  <div class="estagio-cards">
+    <div class="estagio-card"><h3>Verificação de Duplicidades</h3><p>Enxergar em tempo real quem segura mais de uma vaga — a mesma pergunta por trás dos 3.935 casos encontrados em 2025.</p></div>
+    <div class="estagio-card"><h3>Mapa Oferta × Demanda</h3><p>A mesma fila, agora com endereço: onde a pressão por vaga é maior, território por território.</p></div>
+    <div class="estagio-card"><h3>Assistente de Dados</h3><p>Perguntar como quem pergunta pra um colega — "quantas crianças seguram mais de uma vaga em Jacarepaguá agora?" — e receber a resposta puxada do dado vivo, sem esperar relatório.</p></div>
+    <div class="estagio-card"><h3>Assistente de Inscrição (família)</h3><p>A família ancora a busca em casa, no trabalho ou noutro endereço, e recebe as unidades mais próximas já sugeridas — priorizando quem hoje tem mais vaga sobrando. Dá pra aceitar ou reordenar à mão. A posição na fila continua sendo só a pontuação oficial, não a unidade escolhida.</p></div>
+  </div>
+</section>
+
+<!-- 7: ESTÁGIO 3 — UM DIA PODE SER FEITO -->
+<section class="estagio-3" id="s7">
+  <div class="estagio-tag"><span class="passo">3</span> Um dia pode ser feito</div>
+  <h2>O horizonte, com os pés no chão de hoje</h2>
+  <div class="estagio-cards">
+    <div class="estagio-card"><h3>Integração real com o ICH</h3><p>O motor roda sobre estado próprio hoje; em produção, conversaria diretamente com o sistema oficial da SME.</p></div>
+    <div class="estagio-card"><h3>Convocação automatizada</h3><p>WhatsApp e SMS disparados a partir da fila de verdade — hoje, essa etapa é uma simulação.</p></div>
+    <div class="estagio-card"><h3>Planejamento preditivo</h3><p>Antecipar onde abrir vaga cruzando nascidos vivos, IDH e demanda territorial futura.</p></div>
+    <div class="estagio-card"><h3>Reclassificação tardia</h3><p>Depois do processo fechado, casar crianças ainda sem vaga com unidades que sobraram ociosas — mesmo sem inscrição prévia ali. Depende de mudança de regra, não só de tecnologia.</p></div>
+    <div class="estagio-card"><h3>Login institucional (SSO)</h3><p>Usuário e senha servem para a demonstração; a versão oficial usaria o login único da Prefeitura.</p></div>
+  </div>
+</section>
+
+<!-- 8: SALDO OFERTA-DEMANDA -->
+<section id="s8">
+  <div class="kicker">O que a etapa 2 já permite mostrar</div>
+  <h2>Saldo oferta × demanda (2025)</h2>
+  <table>
+    <tr><th>Unidade</th><th>Fila</th><th>Confirmados</th><th>Pressão</th></tr>
+    <tr><td>CM Rio Novo - Rio das Flores</td><td>765</td><td>67</td><td>0,919</td></tr>
+    <tr><td>EDI Escritora Clarice Lispector</td><td>580</td><td>70</td><td>0,892</td></tr>
+    <tr><td>CM Otávio Henrique de Oliveira</td><td>560</td><td>94</td><td>0,856</td></tr>
+  </table>
+  <p class="lead lead-spaced">Bairros com maior fila: Anil, Jacarepaguá, Cidade de Deus, Maré, Taquara, Guaratiba.</p>
+</section>
+
+<!-- 9: TRANSPARÊNCIA -->
+<section class="dark" id="s9">
+  <div class="kicker">Transparência</div>
+  <h2>O que é real vs. simulado, hoje</h2>
+  <table>
+    <tr><th>Item</th><th>Status</th></tr>
+    <tr><td>Fila Unidade — cascata e prazos</td><td><span class="tag real">Real e testado</span></td></tr>
+    <tr><td>Contagens e duplicidade por CPF</td><td><span class="tag real">Real</span></td></tr>
+    <tr><td>Saldo oferta×demanda</td><td><span class="tag real">Real</span></td></tr>
+    <tr><td>Geolocalização das unidades</td><td><span class="tag parcial">Parcial (348/872)</span></td></tr>
+    <tr><td>Disparo de WhatsApp/SMS</td><td><span class="tag sim">Simulado</span></td></tr>
+    <tr><td>Assistente de Inscrição — protocolo gerado</td><td><span class="tag sim">Simulado, não substitui o matricula.rio</span></td></tr>
+    <tr><td>Login por unidade / senha</td><td><span class="tag sim">Placeholder de demo</span></td></tr>
+  </table>
+</section>
+
+<!-- 10: ROTEIRO -->
+<section id="s10">
+  <div class="kicker">Roteiro da demo — 6 minutos</div>
+  <h2>A apresentação segue a mesma jornada</h2>
+  <ul class="roteiro">
+    <li><span class="timer">0:30</span>Abrir com o número real: 3.935 crianças segurando 12.498 vagas em 2025</li>
+    <li><span class="timer">2:30</span><b>Demo ao vivo — Fila Unidade + Painel Gerencial:</b> confirmar uma vaga e mostrar a cascata liberando outra, com a gestão vendo o mesmo evento em tempo real</li>
+    <li><span class="timer">4:00</span>Estágio 2: Mapa, Duplicidades, Assistente de Dados e Assistente de Inscrição da família — já esboçados, prontos para ligar na mesma base</li>
+    <li><span class="timer">5:00</span>Estágio 3: integração real, automação de convocação, planejamento preditivo</li>
+    <li><span class="timer">5:45</span>Fechar reforçando os 17 testes automatizados por trás do motor</li>
+  </ul>
+</section>
+
+<!-- 11: HORIZONTE INTERSETORIAL (v2) -->
+<section class="horizonte" id="s11">
+  <div class="kicker">Um passo além do projeto</div>
+  <h2>O mesmo dado que localiza uma fila de creche religa secretarias</h2>
+  <p class="lead">Bairro, CRE e área de planejamento não pertencem só à educação — são a malha territorial que a SMDEIS já usa para cruzar emprego, IDS e expansão urbana. No dia em que os dados de cada secretaria falam essa mesma língua, a Prefeitura para de tomar decisão em pedaços isolados.</p>
+  <div class="rede-diagrama">
+    <div class="rede-central">Território<small>bairro · CRE · área de planejamento</small></div>
+    <div class="rede-nos">
+      <div class="rede-no"><b>Educação</b><span>fila de creche, vagas, matrícula</span></div>
+      <div class="rede-no"><b>SMDEIS</b><span>emprego, IDS, hubs econômicos</span></div>
+      <div class="rede-no"><b>Urbanismo</b><span>expansão urbana, vazios habitacionais</span></div>
+      <div class="rede-no"><b>Assistência Social</b><span>CadÚnico, Bolsa Família</span></div>
+    </div>
+  </div>
+  <p class="lead lead-spaced">O Painel Intersetorial já cruza parte desses dados hoje, na própria plataforma. O passo que falta é a fila de creche entrar nessa mesma conversa.</p>
+</section>
+
+<!-- 12: FECHAMENTO -->
+<section class="hero" id="s12">
+  <div class="kicker">Obrigado</div>
+  <h1>Match Perfeito</h1>
+  <p class="lead">Guia completo: <code>EduTech-Guia-Apresentacao.md</code><br>Repositórios: <code>OpenSolutions-Lab/edutech</code> · <code>MirellaMilward/sme-2026</code></p>
+</section>
+
+<footer class="slide-footer">Role para navegar · atualizado em 30/08/2026</footer>
+
+<script>
+  const secoes = document.querySelectorAll('section');
+  const dotsEl = document.getElementById('dots');
+  secoes.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.title = s.id;
+    d.addEventListener('click', () => s.scrollIntoView({behavior:'smooth'}));
+    dotsEl.appendChild(d);
+  });
+  const dots = document.querySelectorAll('.dot');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(secoes).indexOf(entry.target);
+        dots.forEach(d => d.classList.remove('active'));
+        dots[idx].classList.add('active');
+      }
+    });
+  }, { threshold: 0.5 });
+  secoes.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
